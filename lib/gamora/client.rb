@@ -19,7 +19,7 @@ module Gamora
 
     def verify_access_token(access_token)
       response = verify_access_token_request(access_token)
-      data = JSON.parse(response).symbolize_keys
+      data = JSON.parse(response.body).symbolize_keys
       !!data[:active]
 
     rescue
@@ -40,7 +40,7 @@ module Gamora
         client_id: id,
         client_secret: secret,
         token: access_token
-      }
+      }.to_json
     end
   end
 end

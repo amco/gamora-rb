@@ -12,13 +12,13 @@ module Gamora
     @@site = nil
 
     mattr_accessor :token_url
-    @@token_url = "/oauth/token"
+    @@token_url = "/oauth2/token"
 
     mattr_accessor :authorize_url
-    @@authorize_url = "/openid/authorize"
+    @@authorize_url = "/oauth2/authorize"
 
     mattr_accessor :introspect_url
-    @@introspect_url = "/oauth/introspect"
+    @@introspect_url = "/oauth2/introspect"
 
     mattr_accessor :token_method
     @@token_method = :post
