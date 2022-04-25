@@ -29,10 +29,15 @@ module Gamora
     private
 
     def verify_access_token_request(access_token)
-      request(:post, options[:introspect_url], {
+      options = verify_access_token_options(access_token)
+      request(:post, options[:introspect_url], options)
+    end
+
+    def verify_access_token_options(access_token)
+      {
         body: verify_access_token_params(access_token),
-        headers: { "Content-Type": "application/json" }
-      })
+        headers: verify_access_token_headers
+      }
     end
 
     def verify_access_token_params(access_token)
@@ -41,6 +46,10 @@ module Gamora
         client_secret: secret,
         token: access_token
       }.to_json
+    end
+
+    def verify_access_token_headers
+      { "Content-Type": "application/json" }
     end
   end
 end

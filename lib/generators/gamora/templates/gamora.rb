@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Gamora.setup do |config|
   # ===> Required OAuth2 configuration options
   config.client_id = "CLIENT_ID"

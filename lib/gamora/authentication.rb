@@ -4,26 +4,25 @@ module Gamora
   module Authentication
     def authenticate_user!
       source = Gamora::Configuration.access_token_source
-      access_token = send(:"get_access_token_from_#{source}")
+      access_token = send(:"access_token_from_#{source}")
       validate_and_verify_access_token!(access_token)
     end
 
     private
 
     def validate_and_verify_access_token!(access_token)
-      unless valid_access_token?(access_token)
-        user_authentication_failed
-      end
+      return if valid_access_token?(access_token)
+      user_authentication_failed
     end
 
-    def get_access_token_from_headers
+    def access_token_from_headers
       pattern = /^Bearer /
       header = request.headers["Authorization"]
-      return unless header && header.match(pattern)
+      return unless header&.match(pattern)
       header.gsub(pattern, "")
     end
 
-    def get_access_token_from_session
+    def access_token_from_session
       session[:access_token]
     end
 
