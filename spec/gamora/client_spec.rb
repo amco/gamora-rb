@@ -14,7 +14,7 @@ module Gamora
         expect(client.secret).to eql Configuration.client_secret
       end
 
-      it "client has correct options" do
+      it "has correct options" do
         client = described_class.from_config
 
         expect(client.options).to include(
