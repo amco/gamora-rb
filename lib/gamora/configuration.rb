@@ -2,32 +2,16 @@
 
 module Gamora
   module Configuration
-    mattr_accessor :client_id
-    @@client_id = nil
+    mattr_accessor :client_id, default: nil
+    mattr_accessor :client_secret, default: nil
+    mattr_accessor :site, default: nil
 
-    mattr_accessor :client_secret
-    @@client_secret = nil
-
-    mattr_accessor :site
-    @@site = nil
-
-    mattr_accessor :token_url
-    @@token_url = "/oauth2/token"
-
-    mattr_accessor :authorize_url
-    @@authorize_url = "/oauth2/authorize"
-
-    mattr_accessor :introspect_url
-    @@introspect_url = "/oauth2/introspect"
-
-    mattr_accessor :token_method
-    @@token_method = :post
-
-    mattr_accessor :redirect_uri
-    @@redirect_uri = nil
-
-    mattr_accessor :access_token_source
-    @@access_token_source = "session"
+    mattr_accessor :redirect_uri, default: nil
+    mattr_accessor :token_url, default: "/oauth2/token"
+    mattr_accessor :authorize_url, default: "/oauth2/authorize"
+    mattr_accessor :introspect_url, default: "/oauth2/introspect"
+    mattr_accessor :access_token_source, default: "session"
+    mattr_accessor :token_method, default: :post
 
     def setup
       yield(self) if block_given?
