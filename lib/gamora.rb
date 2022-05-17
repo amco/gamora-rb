@@ -8,6 +8,7 @@ require "gamora/configuration"
 module Gamora
   extend Configuration
 
+  autoload :User, "gamora/user"
   autoload :Client, "gamora/client"
   autoload :Authentication, "gamora/authentication"
 end
