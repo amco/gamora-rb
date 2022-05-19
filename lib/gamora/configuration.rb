@@ -13,6 +13,7 @@ module Gamora
     mattr_accessor :default_scope, default: "openid profile email"
     mattr_accessor :default_prompt, default: nil
     mattr_accessor :default_strategy, default: "default"
+    mattr_accessor :ui_locales, default: -> { I18n.locale }
 
     def setup
       yield(self) if block_given?
