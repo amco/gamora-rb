@@ -15,10 +15,4 @@ Gamora.setup do |config|
   # config.default_scope = "openid profile email"
   # config.default_prompt = nil
   # config.default_strategy = "default"
-
-  # ===> Authentication
-  # If your application is a JSON API, you probably want to change
-  # this value to "headers" to authenticate users using the access
-  # token in the header Authorization: Bearer <access_token>.
-  # config.access_token_source = "session"
 end
