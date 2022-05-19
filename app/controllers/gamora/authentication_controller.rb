@@ -3,7 +3,7 @@
 module Gamora
   class AuthenticationController < ApplicationController
     def show
-      redirect_to authorization_url
+      redirect_to authorization_url, allow_other_host: true
     end
 
     private
@@ -24,8 +24,7 @@ module Gamora
         :prompt,
         :max_age,
         :strategy,
-        :ui_locales,
-        :redirect_uri
+        :ui_locales
       )
     end
   end
