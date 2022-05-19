@@ -8,9 +8,8 @@ module Gamora
       private
 
       def validate_authentication!
-        unless current_user.present?
-          user_authentication_failed!
-        end
+        return if current_user.present?
+        user_authentication_failed!
       end
 
       def access_token
@@ -21,8 +20,7 @@ module Gamora
       end
 
       def user_authentication_failed!
-        render json: { error: "Access token invalid" },
-          status: :unauthorized
+        render json: { error: "Access token invalid" }, status: :unauthorized
       end
     end
   end
