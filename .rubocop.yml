@@ -1,6 +1,8 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
+  Exclude:
+    - "spec/dummy/**/*"
 
 Style/StringLiterals:
   Enabled: true

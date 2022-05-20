@@ -40,30 +40,45 @@ initializer.
 
 ## User authentication
 
+### Web-based applications
+
 To authenticate the user against the Identity Provider before each request
-include `Gamora::Authentication` in your application controller and use
-the before_action `authenticate_user!` in the actions you need to protect
-and add the `user_authentication_failed` callback to handle when the
-access token is not valid or expired. It should look like this:
+using an access token stored in the session you should include
+`Gamora::Authentication::Session` in your application controller and use the
+before_action `authenticate_user!` in the actions you need to protect.
+In case the access token has expired or is invalid. it will redirect the
+user to the IdP to authenticate again.
 
 ```ruby
 class ApplicationController < ActionController::Base
-  include Gamora::Authentication
+  include Gamora::Authentication::Session
   ...
 
   before_action :authenticate_user!
-
-  private
-
-  def user_authentication_failed
-    # Web-based applications will be something like this:
-    redirect_to login_path, alert: "Session has expired"
-
-    # JSON API applications something like this:
-    render json: { error: "Session has expired" }, status: :unauthorized
-  end
 end
 ```
+
+### JSON API applications
+
+In the other hand, if your application is an JSON API you probably want
+to authenticate the user using the access token in the request headers.
+To do that, you should include `Gamora::Authentication::Headers` in your
+application controller and use the before_action `authenticate_user!` in
+the actions you need to protect. In case the access token has expired or
+is invalid. it will return an error json with unauthorized status.
+
+```ruby
+class ApplicationController < ActionController::Base
+  include Gamora::Authentication::Headers
+  ...
+
+  before_action :authenticate_user!
+end
+```
+
+Optionally, if you want to do something different when authentication
+fails, you just need to override the `user_authentication_failed!`
+method in you controller and customize it as you wish.
 
 ## Contributing
 Contribution directions go here.
