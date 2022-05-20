@@ -36,10 +36,6 @@ module Gamora
         { access_token: access_token }
       end
 
-      let(:request_headers) do
-        { "Content-Type": "application/json" }
-      end
-
       let(:userinfo_url) do
         "#{Configuration.site}#{Configuration.userinfo_url}"
       end
@@ -50,7 +46,7 @@ module Gamora
         Configuration.site = "https://idp.example.com"
 
         stub_request(:post, userinfo_url)
-          .with(body: request_params, headers: request_headers)
+          .with(body: request_params)
           .to_return(body: response_body.to_json, status: response_status)
       end
 

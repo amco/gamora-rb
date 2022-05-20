@@ -7,6 +7,8 @@ module Gamora
       session[:access_token] = access_token.token
       session[:refresh_token] = access_token.refresh_token
       redirect_to session.delete("gamora.origin") || main_app.root_path
+    rescue OAuth2::Error
+      render plain: "Invalid authorization code"
     end
 
     private
