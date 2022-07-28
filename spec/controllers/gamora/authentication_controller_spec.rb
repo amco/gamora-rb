@@ -24,6 +24,7 @@ module Gamora
         expect(query_params[:response_type]).to eql ["code"]
         expect(query_params[:scope]).to eql ["openid profile email"]
         expect(query_params[:strategy]).to eql ["default"]
+        expect(query_params[:theme]).to eql ["default"]
         expect(query_params[:ui_locales]).to eql ["en"]
         expect(query_params[:redirect_uri]).to eql ["http://localhost:3000"]
       end
@@ -33,6 +34,7 @@ module Gamora
           {
             state: "state",
             scope: "openid",
+            theme: "default",
             prompt: "login",
             max_age: "100000",
             strategy: "custom",
@@ -46,6 +48,7 @@ module Gamora
           query_params = CGI.parse(uri.query).symbolize_keys
           expect(query_params[:state]).to eql [params[:state]]
           expect(query_params[:scope]).to eql [params[:scope]]
+          expect(query_params[:theme]).to eql [params[:theme]]
           expect(query_params[:prompt]).to eql [params[:prompt]]
           expect(query_params[:max_age]).to eql [params[:max_age]]
           expect(query_params[:strategy]).to eql [params[:strategy]]
