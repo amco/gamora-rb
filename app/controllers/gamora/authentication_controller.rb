@@ -11,6 +11,7 @@ module Gamora
     def authorization_url
       Client.from_config.auth_code.authorize_url({
         scope: Configuration.default_scope,
+        theme: Configuration.default_theme,
         prompt: Configuration.default_prompt,
         strategy: Configuration.default_strategy,
         ui_locales: Configuration.ui_locales.call
@@ -21,6 +22,7 @@ module Gamora
       params.permit(
         :scope,
         :state,
+        :theme,
         :prompt,
         :max_age,
         :strategy,
