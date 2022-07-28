@@ -15,5 +15,6 @@ Gamora.setup do |config|
   # config.default_scope = "openid profile email"
   # config.default_prompt = nil
   # config.default_strategy = "default"
+  # config.default_theme = "default"
   # config.ui_locales = -> { I18n.locale }
 end
