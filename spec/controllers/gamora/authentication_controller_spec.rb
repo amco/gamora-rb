@@ -24,6 +24,7 @@ module Gamora
         expect(query_params[:response_type]).to eql ["code"]
         expect(query_params[:scope]).to eql ["openid profile email"]
         expect(query_params[:strategy]).to eql ["default"]
+        expect(query_params[:branding]).to eql ["amco"]
         expect(query_params[:theme]).to eql ["default"]
         expect(query_params[:ui_locales]).to eql ["en"]
         expect(query_params[:redirect_uri]).to eql ["http://localhost:3000"]
@@ -38,6 +39,7 @@ module Gamora
             prompt: "login",
             max_age: "100000",
             strategy: "custom",
+            branding: "avanza",
             ui_locales: "es-MX"
           }
         end
@@ -52,6 +54,7 @@ module Gamora
           expect(query_params[:prompt]).to eql [params[:prompt]]
           expect(query_params[:max_age]).to eql [params[:max_age]]
           expect(query_params[:strategy]).to eql [params[:strategy]]
+          expect(query_params[:branding]).to eql [params[:branding]]
           expect(query_params[:ui_locales]).to eql [params[:ui_locales]]
         end
       end

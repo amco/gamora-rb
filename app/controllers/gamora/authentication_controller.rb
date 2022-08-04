@@ -14,6 +14,7 @@ module Gamora
         theme: Configuration.default_theme,
         prompt: Configuration.default_prompt,
         strategy: Configuration.default_strategy,
+        branding: Configuration.default_branding,
         ui_locales: Configuration.ui_locales.call
       }.merge(authorization_params).compact_blank)
     end
@@ -26,6 +27,7 @@ module Gamora
         :prompt,
         :max_age,
         :strategy,
+        :branding,
         :ui_locales
       )
     end
