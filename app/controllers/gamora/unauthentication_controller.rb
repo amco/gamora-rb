@@ -6,6 +6,7 @@ module Gamora
 
     def show
       session[:access_token] = nil
+      session[:refresh_token] = nil
 
       redirect_to authorization_url(params, { max_age: 0 }),
         allow_other_host: true,
