@@ -23,7 +23,7 @@ RSpec.describe HomeController do
           Gamora::Configuration.userinfo_cache_expires_in = 2.seconds
 
           Rails.cache.write(
-            "userinfo:#{session.id}", { id: 10 },
+            "userinfo:#{Digest::SHA256.hexdigest(access_token)}", { id: 10 },
             expires_in: Gamora::Configuration.userinfo_cache_expires_in)
         end
 

@@ -65,7 +65,7 @@ module Gamora
       end
 
       def cache_key(access_token)
-        "userinfo:#{session.id}"
+        "userinfo:#{Digest::SHA256.hexdigest(access_token)}"
       end
     end
   end
