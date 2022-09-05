@@ -18,4 +18,5 @@ Gamora.setup do |config|
   # config.default_branding = "amco"
   # config.default_theme = "default"
   # config.ui_locales = -> { I18n.locale }
+  # config.userinfo_cache_expires_in = 0.seconds
 end

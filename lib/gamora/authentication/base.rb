@@ -47,11 +47,25 @@ module Gamora
 
       def resource_owner_claims(access_token)
         return {} if access_token.blank?
-        oauth_client.userinfo(access_token)
+        resource_owner_claims!(access_token)
+      end
+
+      def resource_owner_claims!(access_token)
+        Rails.cache.fetch(cache_key(access_token), cache_options) do
+          oauth_client.userinfo(access_token)
+        end
       end
 
       def oauth_client
         Client.from_config
+      end
+
+      def cache_options
+        { expires_in: Configuration.userinfo_cache_expires_in }
+      end
+
+      def cache_key(access_token)
+        "userinfo:#{session.id}"
       end
     end
   end
