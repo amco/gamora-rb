@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = Gamora::VERSION
   spec.authors     = ["Alejandro Gutiérrez"]
   spec.email       = ["alejandrodevs@gmail.com"]
-  spec.homepage    = "https://github.com/amco/gamora_rb"
+  spec.homepage    = "https://github.com/amco/gamora-rb"
   spec.summary     = "OpenID Connect Relying Party for rails apps."
   spec.description = "Gamora aims to provide most of the functionality that is commonly required in an OIDC Client."
   spec.license     = "MIT"
