@@ -6,8 +6,8 @@
 
 ## [0.4.0] - 2022-09-02
 
-- Add unauthentication endpoint to remove access/refresh tokens and
-get redirected to the IDP again.
+- Add logout endpoint to remove access/refresh tokens and get redirected
+to the IDP again.
 
 ## [0.3.0] - 2022-08-04
 
