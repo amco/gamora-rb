@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.6.0] - 2023-01-11
+
+- Allow oauth versions greater than 2.0.
+
 ## [0.5.0] - 2022-09-05
 
 - Add caching support (optionally) to avoid hitting the IDP every request.
