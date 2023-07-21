@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
@@ -16,7 +18,4 @@ Layout/LineLength:
   Max: 120
 
 Style/Documentation:
-  Enabled: false
-
-Layout/EmptyLineAfterGuardClause:
   Enabled: false

@@ -2,10 +2,18 @@
 
 module Gamora
   class Client < OAuth2::Client
-    def self.from_config
-      new(
-        Configuration.client_id,
-        Configuration.client_secret,
+    class << self
+      def from_config
+        new(
+          Configuration.client_id,
+          Configuration.client_secret,
+          client_options
+        )
+      end
+
+      private
+
+      def client_options
         {
           site: Configuration.site,
           token_url: Configuration.token_url,
@@ -14,7 +22,7 @@ module Gamora
           userinfo_url: Configuration.userinfo_url,
           authorize_url: Configuration.authorize_url
         }
-      )
+      end
     end
 
     def userinfo(access_token)

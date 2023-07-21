@@ -13,8 +13,6 @@ module Gamora
         {
           code: code,
           grant_type: "authorization_code",
-          client_id: Configuration.client_id,
-          client_secret: Configuration.client_secret,
           redirect_uri: Configuration.redirect_uri
         }
       end

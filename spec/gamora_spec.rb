@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Gamora do
   it "has a version number" do
-    expect(Gamora::VERSION).not_to be nil
+    expect(Gamora::VERSION).not_to be_nil
   end
 end

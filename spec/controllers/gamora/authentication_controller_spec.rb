@@ -7,27 +7,37 @@ module Gamora
     routes { Engine.routes }
 
     describe "GET show" do
+      it "responses with a redirect" do
+        get :show
+        expect(response).to be_redirect
+      end
+
       it "redirects to the idp" do
         get :show
         uri = URI.parse(response.location)
-        expect(response).to be_redirect
-        expect(uri.port).to eql 443
-        expect(uri.host).to eql "myidp.com"
-        expect(uri.path).to eql Configuration.authorize_url
+        expect(uri.to_s).to match "https://myidp.com/oauth2/authorize"
       end
 
-      it "redirects to the idp with the default query params" do
-        get :show
-        uri = URI.parse(response.location)
-        query_params = CGI.parse(uri.query).symbolize_keys
-        expect(query_params[:client_id]).to eql ["CLIENT_ID"]
-        expect(query_params[:response_type]).to eql ["code"]
-        expect(query_params[:scope]).to eql ["openid profile email"]
-        expect(query_params[:strategy]).to eql ["default"]
-        expect(query_params[:branding]).to eql ["amco"]
-        expect(query_params[:theme]).to eql ["default"]
-        expect(query_params[:ui_locales]).to eql ["en"]
-        expect(query_params[:redirect_uri]).to eql ["http://localhost:3000"]
+      context "when no custom params are passed" do
+        let(:expected_params) do
+          {
+            client_id: ["CLIENT_ID"],
+            response_type: ["code"],
+            scope: ["openid profile email"],
+            strategy: ["default"],
+            branding: ["amco"],
+            theme: ["default"],
+            ui_locales: ["en"],
+            redirect_uri: ["http://localhost:3000"]
+          }
+        end
+
+        it "redirects to the idp with the default query params" do
+          get :show
+          uri = URI.parse(response.location)
+          query_params = CGI.parse(uri.query).symbolize_keys
+          expect(query_params).to eql expected_params
+        end
       end
 
       context "when custom params are passed" do
@@ -44,18 +54,24 @@ module Gamora
           }
         end
 
+        let(:expected_params) do
+          {
+            state: [params[:state]],
+            scope: [params[:scope]],
+            theme: [params[:theme]],
+            prompt: [params[:prompt]],
+            max_age: [params[:max_age]],
+            strategy: [params[:strategy]],
+            branding: [params[:branding]],
+            ui_locales: [params[:ui_locales]]
+          }
+        end
+
         it "redirects to the idp with custom query params" do
           get :show, params: params
           uri = URI.parse(response.location)
           query_params = CGI.parse(uri.query).symbolize_keys
-          expect(query_params[:state]).to eql [params[:state]]
-          expect(query_params[:scope]).to eql [params[:scope]]
-          expect(query_params[:theme]).to eql [params[:theme]]
-          expect(query_params[:prompt]).to eql [params[:prompt]]
-          expect(query_params[:max_age]).to eql [params[:max_age]]
-          expect(query_params[:strategy]).to eql [params[:strategy]]
-          expect(query_params[:branding]).to eql [params[:branding]]
-          expect(query_params[:ui_locales]).to eql [params[:ui_locales]]
+          expect(query_params).to include expected_params
         end
       end
 
@@ -72,15 +88,14 @@ module Gamora
 
       context "when redirect_uri is nil" do
         before do
-          allow(Configuration).to receive(:redirect_uri)
-            .and_return(nil)
+          allow(Configuration).to receive(:redirect_uri).and_return(nil)
         end
 
         it "redirects without redirect_uri param" do
           get :show
           uri = URI.parse(response.location)
           query_params = CGI.parse(uri.query).symbolize_keys
-          expect(query_params.keys).to_not include :redirect_uri
+          expect(query_params.keys).not_to include :redirect_uri
         end
       end
     end

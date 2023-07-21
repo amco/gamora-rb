@@ -13,6 +13,7 @@ module Gamora
 
       def validate_authentication!
         return if current_user.present?
+
         session["gamora.origin"] = request.original_url
         user_authentication_failed!
       end
