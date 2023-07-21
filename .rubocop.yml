@@ -5,6 +5,7 @@ AllCops:
   TargetRubyVersion: 2.7
   Exclude:
     - "spec/dummy/**/*"
+    - "spec/spec_helper.rb"
 
 Style/StringLiterals:
   Enabled: true
@@ -18,4 +19,7 @@ Layout/LineLength:
   Max: 120
 
 Style/Documentation:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false

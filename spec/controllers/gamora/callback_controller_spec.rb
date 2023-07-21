@@ -53,7 +53,6 @@ module Gamora
           it "redirects to the root path" do
             root_url = "http://test.host/"
             get :show, params: { code: code }
-            expect(response).to be_redirect
             expect(response).to redirect_to(root_url)
           end
         end

@@ -28,9 +28,13 @@ RSpec.describe HomeController do
           )
         end
 
-        it "does not make a request to the idp" do
+        it "responses successfully" do
           get :index
           expect(response).to be_successful
+        end
+
+        it "does not make a request to the idp" do
+          get :index
           expect(WebMock).not_to have_requested(:post, userinfo_url)
         end
       end
@@ -49,9 +53,13 @@ RSpec.describe HomeController do
             .to_return(body: response_body.to_json, status: response_status)
         end
 
-        it "makes a request to the idp" do
+        it "responses successfully" do
           get :index
           expect(response).to be_successful
+        end
+
+        it "makes a request to the idp" do
+          get :index
           expect(WebMock).to have_requested(:post, userinfo_url).once
         end
       end
@@ -63,9 +71,13 @@ RSpec.describe HomeController do
             .to_return(body: response_body.to_json, status: response_status)
         end
 
-        it "makes a request to the idp" do
+        it "responses successfully" do
           get :index
           expect(response).to be_successful
+        end
+
+        it "makes a request to the idp" do
+          get :index
           expect(WebMock).to have_requested(:post, userinfo_url).once
         end
       end
