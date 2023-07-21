@@ -38,6 +38,41 @@ end
 To see the full list of configuration options please check your gamora
 initializer.
 
+## Mount Gamora Engine
+
+In order to have the authorization and callback endpoints mount the
+engine in the `config/routes.rb` file:
+
+```ruby
+Rails.application.routes.draw do
+  ...
+  mount Gamora::Engine => "/auth"
+
+  ...
+end
+```
+
+This will enable the following routes in the parent application:
+
+#### `gamora.authorization_path`
+
+This endpoint will redirect users to the IDP generating url and query
+params based on the configuration. This endpoint is called automatically
+when the user is not logged in and the application requires users to be
+authenticated.
+
+#### `gamora.logout_path`
+
+This endpoint allows users to be logged out from the application and the
+IDP. It removes the access and refresh tokens and redirects to IDP in order
+to force users to authenticate again.
+
+#### `gamora.callback_path`
+
+This endpoint is the responsible to received the auth code provided by
+the IDP and generate and access token. This endpoint is called automatically
+once the user authenticates successfully in the IDP.
+
 ## User authentication
 
 ### Web-based applications
