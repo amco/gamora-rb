@@ -47,6 +47,7 @@ module Gamora
 
       def resource_owner_claims(access_token)
         return {} if access_token.blank?
+
         resource_owner_claims!(access_token)
       end
 

@@ -1,8 +1,11 @@
+require: rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
   Exclude:
     - "spec/dummy/**/*"
+    - "spec/spec_helper.rb"
 
 Style/StringLiterals:
   Enabled: true
@@ -18,5 +21,5 @@ Layout/LineLength:
 Style/Documentation:
   Enabled: false
 
-Layout/EmptyLineAfterGuardClause:
+RSpec/NestedGroups:
   Enabled: false

@@ -6,7 +6,8 @@ source "https://rubygems.org"
 gemspec
 
 gem "rake", "~> 13.0"
-gem "rspec-rails", "~> 5.1"
-gem "rubocop", "~> 1.21"
-gem "sqlite3", "~> 1.4"
-gem "webmock", "~> 3.14"
+gem "rspec-rails", "~> 6.0"
+gem "rubocop", "~> 1.54"
+gem "rubocop-rspec", require: false
+gem "sqlite3", "~> 1.6"
+gem "webmock", "~> 3.18"

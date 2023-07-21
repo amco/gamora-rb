@@ -7,7 +7,7 @@ RSpec.describe HomeController do
     context "when user is logged in" do
       let(:access_token) { SecureRandom.hex(10) }
       let(:request_params) { { access_token: access_token } }
-      let(:response_body) { { id: 10  } }
+      let(:response_body) { { id: 10 } }
       let(:response_status) { 200 }
 
       let(:userinfo_url) do
@@ -24,31 +24,43 @@ RSpec.describe HomeController do
 
           Rails.cache.write(
             "userinfo:#{Digest::SHA256.hexdigest(access_token)}", { id: 10 },
-            expires_in: Gamora::Configuration.userinfo_cache_expires_in)
+            expires_in: Gamora::Configuration.userinfo_cache_expires_in
+          )
         end
 
-        context "when cache has not expired" do
-          it "does not make a request to the idp" do
-            get :index
-            expect(response).to be_successful
-            expect(WebMock).to_not have_requested(:post, userinfo_url)
-          end
+        it "responses successfully" do
+          get :index
+          expect(response).to be_successful
         end
 
-        context "when cache has expired" do
-          before do
-            sleep Gamora::Configuration.userinfo_cache_expires_in
+        it "does not make a request to the idp" do
+          get :index
+          expect(WebMock).not_to have_requested(:post, userinfo_url)
+        end
+      end
 
-            stub_request(:post, userinfo_url)
-              .with(body: request_params)
-              .to_return(body: response_body.to_json, status: response_status)
-          end
+      context "when cache has expired" do
+        before do
+          Gamora::Configuration.userinfo_cache_expires_in = 0.seconds
 
-          it "makes a request to the idp" do
-            get :index
-            expect(response).to be_successful
-            expect(WebMock).to have_requested(:post, userinfo_url).once
-          end
+          Rails.cache.write(
+            "userinfo:#{Digest::SHA256.hexdigest(access_token)}", { id: 10 },
+            expires_in: Gamora::Configuration.userinfo_cache_expires_in
+          )
+
+          stub_request(:post, userinfo_url)
+            .with(body: request_params)
+            .to_return(body: response_body.to_json, status: response_status)
+        end
+
+        it "responses successfully" do
+          get :index
+          expect(response).to be_successful
+        end
+
+        it "makes a request to the idp" do
+          get :index
+          expect(WebMock).to have_requested(:post, userinfo_url).once
         end
       end
 
@@ -59,9 +71,13 @@ RSpec.describe HomeController do
             .to_return(body: response_body.to_json, status: response_status)
         end
 
-        it "makes a request to the idp" do
+        it "responses successfully" do
           get :index
           expect(response).to be_successful
+        end
+
+        it "makes a request to the idp" do
+          get :index
           expect(WebMock).to have_requested(:post, userinfo_url).once
         end
       end

@@ -13,8 +13,6 @@ module Gamora
         {
           code: code,
           grant_type: "authorization_code",
-          client_id: Configuration.client_id,
-          client_secret: Configuration.client_secret,
           redirect_uri: Configuration.redirect_uri
         }
       end
@@ -55,7 +53,6 @@ module Gamora
           it "redirects to the root path" do
             root_url = "http://test.host/"
             get :show, params: { code: code }
-            expect(response).to be_redirect
             expect(response).to redirect_to(root_url)
           end
         end

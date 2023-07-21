@@ -9,6 +9,7 @@ module Gamora
 
       def validate_authentication!
         return if current_user.present?
+
         user_authentication_failed!
       end
 
@@ -16,6 +17,7 @@ module Gamora
         pattern = /^Bearer /
         header = request.headers["Authorization"]
         return unless header&.match(pattern)
+
         header.gsub(pattern, "")
       end
 

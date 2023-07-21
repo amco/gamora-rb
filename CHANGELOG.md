@@ -1,4 +1,8 @@
-## [Unreleased]
+# Changelog
+
+## [0.6.1] - 2023-07-21
+
+- Improve gem strucure and fix rubocop warnings.
 
 ## [0.6.0] - 2023-01-11
 
