@@ -8,6 +8,8 @@ module Gamora
                   :email,
                   :last_name,
                   :first_name,
-                  :phone_number
+                  :phone_number,
+                  :email_verified,
+                  :phone_number_verified
   end
 end
