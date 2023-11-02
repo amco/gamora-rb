@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.0] - 2023-11-02
+
+- Add support `email_verified` and `phone_number_verified` claims.
+
 ## [0.6.1] - 2023-07-21
 
 - Improve gem strucure and fix rubocop warnings.
