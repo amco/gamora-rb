@@ -3,6 +3,16 @@
 module Gamora
   module Authentication
     module Base
+      CLAIMS = {
+        sub: :id,
+        email: :email,
+        given_name: :first_name,
+        family_name: :last_name,
+        phone_number: :phone_number,
+        email_verified: :email_verified,
+        phone_number_verified: :phone_number_verified
+      }.freeze
+
       def authenticate_user!
         claims = resource_owner_claims(access_token)
         assign_current_user_from_claims(claims) if claims.present?
@@ -33,16 +43,7 @@ module Gamora
       end
 
       def user_attributes_from_claims(claims)
-        claims.transform_keys do |key|
-          case key
-          when :sub then :id
-          when :email then :email
-          when :given_name then :first_name
-          when :family_name then :last_name
-          when :phone_number then :phone_number
-          else key
-          end
-        end
+        claims.slice(*CLAIMS.keys).transform_keys(CLAIMS)
       end
 
       def resource_owner_claims(access_token)
