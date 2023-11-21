@@ -5,6 +5,7 @@ module Gamora
     module Base
       CLAIMS = {
         sub: :id,
+        roles: :roles,
         email: :email,
         given_name: :first_name,
         family_name: :last_name,
