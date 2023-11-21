@@ -1,8 +1,12 @@
 # Changelog
 
+## [0.8.0] - 2023-11-21
+
+- Add support for `roles` claim.
+
 ## [0.7.0] - 2023-11-02
 
-- Add support `email_verified` and `phone_number_verified` claims.
+- Add support for `email_verified` and `phone_number_verified` claims.
 
 ## [0.6.1] - 2023-07-21
 
@@ -23,11 +27,11 @@ to the IDP again.
 
 ## [0.3.0] - 2022-08-04
 
-- Add support to `branding` param in the authorization url.
+- Add support for `branding` param in the authorization url.
 
 ## [0.2.0] - 2022-07-28
 
-- Add support to `theme` param in the authorization url.
+- Add support for `theme` param in the authorization url.
 
 ## [0.1.0] - 2022-05-20
 
