@@ -6,15 +6,15 @@
   - Verify access token using introspect endpoint instead userinfo.
   - Add `introspect_cache_expires_in` config to avoid hitting the IDP
     every request. Default value set to 0.seconds.
-  - Change default value for `userinfo_cache_expires_in` config. Now,
+  - New default value for `userinfo_cache_expires_in` config. Now,
     the default set to 1.minute.
-  - Add `cross_client_whitelist` config to accept access tokens only
+  - Add `cross_client_whitelist` config to accept access tokens ONLY
     from trusted clients. Default value set to same client.
 
 - Breaking changes:
   - If your application is accepting access tokens from other IDP
-    clients you must set the config `cross_client_whitelist` with
-    the client ids that are valid.
+    clients you must set the `cross_client_whitelist` config with
+    the client ids that are whitelisted.
 
 ## [0.8.0] - 2023-11-21
 
