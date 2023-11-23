@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.9.0] - 2023-11-24
+
+- Verify access token using introspect endpoint instead userinfo.
+- Add `introspect_cache_expires_in` config to avoid hitting the IDP every request.
+- Add `cross_client_whitelist` config to accept access tokens only from trusted clients.
+
 ## [0.8.0] - 2023-11-21
 
 - Add support for `roles` claim.
