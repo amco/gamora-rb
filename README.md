@@ -115,6 +115,38 @@ Optionally, if you want to do something different when authentication
 fails, you just need to override the `user_authentication_failed!`
 method in you controller and customize it as you wish.
 
+## Cross-Client Identity
+
+By default, gamora will accept only access tokens that were generating
+with the `client_id` in the configuration. If access tokens coming from
+other clients have to be accepted, make sure to add their client ids to
+the `whitelisted_clients` config option.
+
+```ruby
+Gamora.setup do |config|
+  ...
+
+  config.whitelisted_clients = ["OTHER_CLIENT_ID"]
+end
+```
+
+## Caching
+
+In order to avoid performing requests to the IDP on each request in the
+application, it is possible to set a caching time for introspection and
+userinfo endpoints. Make sure to not have a too long expiration time for
+`introspect_cache_expires_in` but not too short to impact the application
+performance, it is a balance.
+
+```ruby
+Gamora.setup do |config|
+  ...
+
+  config.userinfo_cache_expires_in = 10.minute
+  config.introspect_cache_expires_in = 5.seconds
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then,

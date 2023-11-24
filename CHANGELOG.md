@@ -13,8 +13,9 @@
 
 - Breaking changes:
   - If your application is accepting access tokens from other IDP
-    clients you must set the `cross_client_whitelist` config with
-    the client ids that are whitelisted.
+    clients you must set the `whitelisted_clients` config with
+    the client ids that are whitelisted. Otherwise, the application
+    is gonna accept access tokens ONLY from the same client id.
 
 ## [0.8.0] - 2023-11-21
 
