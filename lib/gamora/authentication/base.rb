@@ -49,12 +49,12 @@ module Gamora
       end
 
       def whitelisted_clients
-        Configuration.cross_client_whitelist | [Configuration.client_id]
+        Configuration.whitelisted_clients | [Configuration.client_id]
       end
 
       def assign_current_user_from_claims(claims)
-        attrs = user_attributes_from_claims(claims)
-        @current_user = User.new(attrs)
+        attributes = user_attributes_from_claims(claims)
+        @current_user = User.new(attributes)
       end
 
       def user_attributes_from_claims(claims)
@@ -63,28 +63,28 @@ module Gamora
 
       def resource_owner_claims(access_token)
         cache_key = cache_key(:userinfo, access_token)
-        cache_options = { expires_in: Configuration.userinfo_cache_expires_in }
+        expires_in = Configuration.userinfo_cache_expires_in
 
-        Rails.cache.fetch(cache_key, cache_options) do
+        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
           oauth_client.userinfo(access_token)
         end
       end
 
       def introspect_access_token(access_token)
         cache_key = cache_key(:introspect, access_token)
-        cache_options = { expires_in: Configuration.introspect_cache_expires_in }
+        expires_in = Configuration.introspect_cache_expires_in
 
-        Rails.cache.fetch(cache_key, cache_options) do
+        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
           oauth_client.introspect(access_token)
         end
       end
 
-      def oauth_client
-        Client.from_config
+      def cache_key(context, access_token)
+        "gamora:#{context}:#{Digest::SHA256.hexdigest(access_token)}"
       end
 
-      def cache_key(context, access_token)
-        "#{context}:#{Digest::SHA256.hexdigest(access_token)}"
+      def oauth_client
+        Client.from_config
       end
     end
   end

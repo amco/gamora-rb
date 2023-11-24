@@ -19,7 +19,7 @@ module Gamora
     mattr_accessor :ui_locales, default: -> { I18n.locale }
     mattr_accessor :userinfo_cache_expires_in, default: 1.minute
     mattr_accessor :introspect_cache_expires_in, default: 0.seconds
-    mattr_accessor :cross_client_whitelist, default: []
+    mattr_accessor :whitelisted_clients, default: []
 
     def setup
       yield(self) if block_given?

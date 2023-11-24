@@ -8,7 +8,7 @@
     every request. Default value is `0.seconds`.
   - New default value for `userinfo_cache_expires_in` config. Now,
     the default value is `1.minute`.
-  - Add `cross_client_whitelist` config to accept access tokens ONLY
+  - Add `whitelisted_clients` config to accept access tokens ONLY
     from trusted clients. Default value is the same client.
 
 - Breaking changes:

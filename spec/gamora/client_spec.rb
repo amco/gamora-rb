@@ -11,7 +11,8 @@ module Gamora
           token_method: Configuration.token_method,
           redirect_uri: Configuration.redirect_uri,
           userinfo_url: Configuration.userinfo_url,
-          authorize_url: Configuration.authorize_url
+          authorize_url: Configuration.authorize_url,
+          introspect_url: Configuration.introspect_url
         }
       end
 
@@ -63,7 +64,7 @@ module Gamora
       end
 
       context "when access token is valid" do
-        let(:response_body) { { active: true } }
+        let(:response_body) { { email: "test@example.com" } }
         let(:response_status) { 200 }
 
         it "returns claims" do
@@ -77,6 +78,50 @@ module Gamora
 
         it "returns empty hash" do
           expect(client.userinfo(access_token)).to eql({})
+        end
+      end
+    end
+
+    describe "#introspect" do
+      subject(:client) { described_class.from_config }
+
+      let(:access_token) { SecureRandom.hex(10) }
+
+      let(:request_params) do
+        {
+          token: access_token,
+          client_id: Configuration.client_id,
+          client_secret: Configuration.client_secret
+        }
+      end
+
+      let(:introspect_url) do
+        "#{Configuration.site}#{Configuration.introspect_url}"
+      end
+
+      before do
+        Configuration.site = "https://idp.example.com"
+
+        stub_request(:post, introspect_url)
+          .with(body: request_params)
+          .to_return(body: response_body.to_json, status: response_status)
+      end
+
+      context "when response is valid" do
+        let(:response_body) { { active: true } }
+        let(:response_status) { 200 }
+
+        it "returns claims" do
+          expect(client.introspect(access_token)).to eql response_body
+        end
+      end
+
+      context "when response is invalid" do
+        let(:response_body) { "" }
+        let(:response_status) { 401 }
+
+        it "returns empty hash" do
+          expect(client.introspect(access_token)).to eql({})
         end
       end
     end
