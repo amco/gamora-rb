@@ -15,9 +15,15 @@ module Gamora
       }.freeze
 
       def authenticate_user!
+        return authentication_failed! unless access_token.present?
+
+        token_data = introspect_access_token(access_token)
+        return authentication_failed! unless valid_token_data?(token_data)
+
         claims = resource_owner_claims(access_token)
-        assign_current_user_from_claims(claims) if claims.present?
-        validate_authentication!
+        return authentication_failed! unless claims.present?
+
+        assign_current_user_from_claims(claims)
       end
 
       def current_user
@@ -26,21 +32,29 @@ module Gamora
 
       private
 
-      def validate_authentication!
-        raise NotImplementedError
-      end
-
       def access_token
         raise NotImplementedError
       end
 
-      def user_authentication_failed!
+      def authentication_failed!
         raise NotImplementedError
       end
 
+      def valid_token_data?(token_data)
+        token_data[:active] && whitelisted_client?(token_data[:client_id])
+      end
+
+      def whitelisted_client?(client_id)
+        whitelisted_clients.include?(client_id)
+      end
+
+      def whitelisted_clients
+        Configuration.whitelisted_clients | [Configuration.client_id]
+      end
+
       def assign_current_user_from_claims(claims)
-        attrs = user_attributes_from_claims(claims)
-        @current_user = User.new(attrs)
+        attributes = user_attributes_from_claims(claims)
+        @current_user = User.new(attributes)
       end
 
       def user_attributes_from_claims(claims)
@@ -48,27 +62,29 @@ module Gamora
       end
 
       def resource_owner_claims(access_token)
-        return {} if access_token.blank?
+        cache_key = cache_key(:userinfo, access_token)
+        expires_in = Configuration.userinfo_cache_expires_in
 
-        resource_owner_claims!(access_token)
-      end
-
-      def resource_owner_claims!(access_token)
-        Rails.cache.fetch(cache_key(access_token), cache_options) do
+        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
           oauth_client.userinfo(access_token)
         end
       end
 
+      def introspect_access_token(access_token)
+        cache_key = cache_key(:introspect, access_token)
+        expires_in = Configuration.introspect_cache_expires_in
+
+        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
+          oauth_client.introspect(access_token)
+        end
+      end
+
+      def cache_key(context, access_token)
+        "gamora:#{context}:#{Digest::SHA256.hexdigest(access_token)}"
+      end
+
       def oauth_client
         Client.from_config
-      end
-
-      def cache_options
-        { expires_in: Configuration.userinfo_cache_expires_in }
-      end
-
-      def cache_key(access_token)
-        "userinfo:#{Digest::SHA256.hexdigest(access_token)}"
       end
     end
   end

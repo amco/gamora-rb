@@ -7,12 +7,6 @@ module Gamora
 
       private
 
-      def validate_authentication!
-        return if current_user.present?
-
-        user_authentication_failed!
-      end
-
       def access_token
         pattern = /^Bearer /
         header = request.headers["Authorization"]
@@ -21,7 +15,7 @@ module Gamora
         header.gsub(pattern, "")
       end
 
-      def user_authentication_failed!
+      def authentication_failed!
         render json: { error: "Access token invalid" }, status: :unauthorized
       end
     end

@@ -5,26 +5,63 @@ require "rails_helper"
 RSpec.describe HomeController do
   describe "GET index" do
     context "when user is logged in" do
-      let(:access_token) { SecureRandom.hex(10) }
-      let(:request_params) { { access_token: access_token } }
-      let(:response_body) { { id: 10 } }
-      let(:response_status) { 200 }
+      let(:site)            { Gamora::Configuration.site }
+      let(:userinfo_path)   { Gamora::Configuration.userinfo_url }
+      let(:introspect_path) { Gamora::Configuration.introspect_url }
+      let(:userinfo_url)    { "#{site}#{userinfo_path}" }
+      let(:introspect_url)  { "#{site}#{introspect_path}" }
+      let(:access_token)    { SecureRandom.hex(10) }
+      let(:digest_token)    { Digest::SHA256.hexdigest(access_token) }
 
-      let(:userinfo_url) do
-        "#{Gamora::Configuration.site}#{Gamora::Configuration.userinfo_url}"
+      let(:userinfo_params) do
+        { access_token: access_token }
+      end
+
+      let(:userinfo_response) do
+        {
+          id: 10,
+          roles: {},
+          given_name: "Foo",
+          family_name: "Bar",
+          email: "test@example.com",
+          email_verified: true,
+          phone_number: "+523344556677",
+          phone_number_verified: true
+        }
+      end
+
+      let(:introspect_params) do
+        {
+          token: access_token,
+          client_id: Gamora::Configuration.client_id,
+          client_secret: Gamora::Configuration.client_secret
+        }
+      end
+
+      let(:introspect_response) do
+        {
+          active: true,
+          client_id: Gamora::Configuration.client_id
+        }
       end
 
       before do
         session[:access_token] = access_token
       end
 
-      context "when userinfo is cached" do
+      context "when introspect and userinfo is cached" do
         before do
           Gamora::Configuration.userinfo_cache_expires_in = 2.seconds
+          Gamora::Configuration.introspect_cache_expires_in = 2.seconds
 
           Rails.cache.write(
-            "userinfo:#{Digest::SHA256.hexdigest(access_token)}", { id: 10 },
+            "gamora:userinfo:#{digest_token}", userinfo_response,
             expires_in: Gamora::Configuration.userinfo_cache_expires_in
+          )
+
+          Rails.cache.write(
+            "gamora:introspect:#{digest_token}", introspect_response,
+            expires_in: Gamora::Configuration.introspect_cache_expires_in
           )
         end
 
@@ -33,24 +70,39 @@ RSpec.describe HomeController do
           expect(response).to be_successful
         end
 
-        it "does not make a request to the idp" do
+        it "does not request userinfo to the idp" do
           get :index
           expect(WebMock).not_to have_requested(:post, userinfo_url)
         end
+
+        it "does not request introspect to the idp" do
+          get :index
+          expect(WebMock).not_to have_requested(:post, introspect_url)
+        end
       end
 
-      context "when cache has expired" do
+      context "when introspect and userinfo caches have expired" do
         before do
+          Gamora::Configuration.introspect_cache_expires_in = 0.seconds
           Gamora::Configuration.userinfo_cache_expires_in = 0.seconds
 
           Rails.cache.write(
-            "userinfo:#{Digest::SHA256.hexdigest(access_token)}", { id: 10 },
+            "gamora:userinfo:#{digest_token}", userinfo_response,
             expires_in: Gamora::Configuration.userinfo_cache_expires_in
           )
 
+          Rails.cache.write(
+            "gamora:introspect:#{digest_token}", introspect_response,
+            expires_in: Gamora::Configuration.introspect_cache_expires_in
+          )
+
           stub_request(:post, userinfo_url)
-            .with(body: request_params)
-            .to_return(body: response_body.to_json, status: response_status)
+            .with(body: userinfo_params)
+            .to_return(body: userinfo_response.to_json, status: 200)
+
+          stub_request(:post, introspect_url)
+            .with(body: introspect_params)
+            .to_return(body: introspect_response.to_json, status: 200)
         end
 
         it "responses successfully" do
@@ -58,17 +110,26 @@ RSpec.describe HomeController do
           expect(response).to be_successful
         end
 
-        it "makes a request to the idp" do
+        it "requests userinfo to the idp" do
           get :index
           expect(WebMock).to have_requested(:post, userinfo_url).once
+        end
+
+        it "requests introspect to the idp" do
+          get :index
+          expect(WebMock).to have_requested(:post, introspect_url).once
         end
       end
 
-      context "when userinfo is not cached" do
+      context "when introspect and userinfo are not cached" do
         before do
           stub_request(:post, userinfo_url)
-            .with(body: request_params)
-            .to_return(body: response_body.to_json, status: response_status)
+            .with(body: userinfo_params)
+            .to_return(body: userinfo_response.to_json, status: 200)
+
+          stub_request(:post, introspect_url)
+            .with(body: introspect_params)
+            .to_return(body: introspect_response.to_json, status: 200)
         end
 
         it "responses successfully" do
@@ -76,9 +137,64 @@ RSpec.describe HomeController do
           expect(response).to be_successful
         end
 
-        it "makes a request to the idp" do
+        it "requests userinfo to the idp" do
           get :index
           expect(WebMock).to have_requested(:post, userinfo_url).once
+        end
+
+        it "requests introspect to the idp" do
+          get :index
+          expect(WebMock).to have_requested(:post, introspect_url).once
+        end
+      end
+
+      context "when access token is not active" do
+        before do
+          invalid_response = introspect_response.merge(active: false)
+
+          stub_request(:post, introspect_url)
+            .with(body: introspect_params)
+            .to_return(body: invalid_response.to_json, status: 200)
+        end
+
+        it "responses successfully" do
+          get :index
+          expect(response).to be_redirect
+        end
+
+        it "does not request userinfo to the idp" do
+          get :index
+          expect(WebMock).not_to have_requested(:post, userinfo_url).once
+        end
+
+        it "requests introspect to the idp" do
+          get :index
+          expect(WebMock).to have_requested(:post, introspect_url).once
+        end
+      end
+
+      context "when access token is from another client" do
+        before do
+          invalid_response = introspect_response.merge(client_id: "OTHER")
+
+          stub_request(:post, introspect_url)
+            .with(body: introspect_params)
+            .to_return(body: invalid_response.to_json, status: 200)
+        end
+
+        it "responses successfully" do
+          get :index
+          expect(response).to be_redirect
+        end
+
+        it "does not request userinfo to the idp" do
+          get :index
+          expect(WebMock).not_to have_requested(:post, userinfo_url).once
+        end
+
+        it "requests introspect to the idp" do
+          get :index
+          expect(WebMock).to have_requested(:post, introspect_url).once
         end
       end
     end

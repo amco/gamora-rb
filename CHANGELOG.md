@@ -1,37 +1,62 @@
 # Changelog
 
+## [0.9.0] - 2023-11-24
+
+- Enhancements:
+  - Verify access token using introspect endpoint instead userinfo.
+  - Add `introspect_cache_expires_in` config to avoid hitting the IDP
+    every request. Default value is `0.seconds`.
+  - New default value for `userinfo_cache_expires_in` config. Now,
+    the default value is `1.minute`.
+  - Add `whitelisted_clients` config to accept access tokens ONLY
+    from trusted clients. Default value is the same client.
+
+- Breaking changes:
+  - If your application is accepting access tokens from other IDP
+    clients you must set the `cross_client_whitelist` config with
+    the client ids that are whitelisted.
+
 ## [0.8.0] - 2023-11-21
 
-- Add support for `roles` claim.
+- Enhancements:
+  - Add support for `roles` claim.
 
 ## [0.7.0] - 2023-11-02
 
-- Add support for `email_verified` and `phone_number_verified` claims.
+- Enhancements:
+  - Add support for `email_verified` and `phone_number_verified` claims.
 
 ## [0.6.1] - 2023-07-21
 
-- Improve gem strucure and fix rubocop warnings.
+- Enhancements:
+  - Improve gem strucure and fix rubocop warnings.
 
 ## [0.6.0] - 2023-01-11
 
-- Allow oauth versions greater than 2.0.
+- Enhancements:
+  - Allow oauth versions greater than 2.0.
 
 ## [0.5.0] - 2022-09-05
 
-- Add caching support (optionally) to avoid hitting the IDP every request.
+- Enhancements:
+  - Add `userinfo_cache_expires_in` config to avoid hitting the IDP
+    every request. (Default set to 0.seconds)
 
 ## [0.4.0] - 2022-09-02
 
-- Add logout endpoint to remove access/refresh tokens and get redirected
-to the IDP again.
+- Features:
+  - Add logout endpoint to remove access/refresh tokens and get redirected
+    to the IDP again.
 
 ## [0.3.0] - 2022-08-04
 
-- Add support for `branding` param in the authorization url.
+- Enhancements:
+  - Add support for `branding` param in the authorization url.
 
 ## [0.2.0] - 2022-07-28
 
-- Add support for `theme` param in the authorization url.
+- Enhancements:
+  - Add support for `theme` param in the authorization url.
 
 ## [0.1.0] - 2022-05-20
 

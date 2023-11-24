@@ -8,8 +8,9 @@ Gamora.setup do |config|
 
   # ===> Optional OAuth2 configuration options and its defaults.
   # config.token_url = "/oauth2/token"
-  # config.authorize_url = "/oauth2/authorize"
   # config.userinfo_url = "/oauth2/userinfo"
+  # config.authorize_url = "/oauth2/authorize"
+  # config.introspect_url = "/oauth2/introspect"
   # config.token_method = :post
   config.redirect_uri = "http://localhost:3000"
   # config.default_scope = "openid profile email"
@@ -19,4 +20,6 @@ Gamora.setup do |config|
   # config.default_theme = "default"
   # config.ui_locales = -> { I18n.locale }
   # config.userinfo_cache_expires_in = 0.seconds
+  # config.introspect_cache_expires_in = 0.seconds
+  # config.whitelisted_clients = []
 end

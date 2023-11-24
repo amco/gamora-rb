@@ -11,18 +11,12 @@ module Gamora
 
       private
 
-      def validate_authentication!
-        return if current_user.present?
-
-        session["gamora.origin"] = request.original_url
-        user_authentication_failed!
-      end
-
       def access_token
         session[:access_token]
       end
 
-      def user_authentication_failed!
+      def authentication_failed!
+        session["gamora.origin"] = request.original_url
         redirect_to gamora.authentication_path
       end
     end
