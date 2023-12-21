@@ -7,6 +7,7 @@ module Gamora
     attr_accessor :id,
                   :roles,
                   :email,
+                  :username,
                   :last_name,
                   :first_name,
                   :phone_number,
