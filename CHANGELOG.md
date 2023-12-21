@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.0] - 2023-12-21
+
+- Enhancements:
+  - Add support for `username` claim.
+
 ## [0.9.0] - 2023-11-24
 
 - Enhancements:

@@ -8,6 +8,7 @@ RSpec.describe Gamora::User do
       {
         id: 1,
         email: "test@email.com",
+        username: "foobar",
         first_name: "Foo",
         last_name: "Bar",
         phone_number: "+523344556677",

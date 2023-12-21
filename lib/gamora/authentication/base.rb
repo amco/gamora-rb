@@ -7,6 +7,7 @@ module Gamora
         sub: :id,
         roles: :roles,
         email: :email,
+        username: :username,
         given_name: :first_name,
         family_name: :last_name,
         phone_number: :phone_number,
