@@ -42,15 +42,7 @@ module Gamora
       end
 
       def valid_token_data?(token_data)
-        token_data[:active] && whitelisted_client?(token_data[:client_id])
-      end
-
-      def whitelisted_client?(client_id)
-        whitelisted_clients.include?(client_id)
-      end
-
-      def whitelisted_clients
-        Configuration.whitelisted_clients | [Configuration.client_id]
+        token_data[:active]
       end
 
       def assign_current_user_from_claims(claims)

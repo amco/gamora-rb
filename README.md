@@ -115,21 +115,6 @@ Optionally, if you want to do something different when authentication
 fails, you just need to override the `user_authentication_failed!`
 method in you controller and customize it as you wish.
 
-## Cross-Client Identity
-
-By default, gamora will accept only access tokens that were generating
-with the `client_id` in the configuration. If access tokens coming from
-other clients have to be accepted, make sure to add their client ids to
-the `whitelisted_clients` config option.
-
-```ruby
-Gamora.setup do |config|
-  ...
-
-  config.whitelisted_clients = ["OTHER_CLIENT_ID"]
-end
-```
-
 ## Caching
 
 In order to avoid performing requests to the IDP on each request in the

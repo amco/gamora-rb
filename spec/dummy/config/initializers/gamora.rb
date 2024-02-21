@@ -21,5 +21,4 @@ Gamora.setup do |config|
   # config.ui_locales = -> { I18n.locale }
   # config.userinfo_cache_expires_in = 0.seconds
   # config.introspect_cache_expires_in = 0.seconds
-  # config.whitelisted_clients = []
 end
