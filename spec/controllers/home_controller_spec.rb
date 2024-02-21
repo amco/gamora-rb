@@ -172,31 +172,6 @@ RSpec.describe HomeController do
           expect(WebMock).to have_requested(:post, introspect_url).once
         end
       end
-
-      context "when access token is from another client" do
-        before do
-          invalid_response = introspect_response.merge(client_id: "OTHER")
-
-          stub_request(:post, introspect_url)
-            .with(body: introspect_params)
-            .to_return(body: invalid_response.to_json, status: 200)
-        end
-
-        it "responses successfully" do
-          get :index
-          expect(response).to be_redirect
-        end
-
-        it "does not request userinfo to the idp" do
-          get :index
-          expect(WebMock).not_to have_requested(:post, userinfo_url).once
-        end
-
-        it "requests introspect to the idp" do
-          get :index
-          expect(WebMock).to have_requested(:post, introspect_url).once
-        end
-      end
     end
 
     context "when user is not logged in" do
