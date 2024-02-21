@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.0] - 2024-02-21
+
+- Deprecations:
+  - Remove `whitelisted_clients` support.
+
 ## [0.10.0] - 2023-12-21
 
 - Enhancements:
