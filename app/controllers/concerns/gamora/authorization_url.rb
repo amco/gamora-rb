@@ -2,6 +2,18 @@
 
 module Gamora
   module AuthorizationUrl
+    ALLOWED_PARAMS = %i[
+      scope
+      state
+      theme
+      prompt
+      max_age
+      strategy
+      branding
+      ui_locales
+      allow_create
+    ].freeze
+
     def authorization_url(params, extra_params = {})
       data =
         default_params
@@ -21,21 +33,13 @@ module Gamora
         prompt: Configuration.default_prompt,
         strategy: Configuration.default_strategy,
         branding: Configuration.default_branding,
-        ui_locales: Configuration.ui_locales.call
+        ui_locales: Configuration.ui_locales.call,
+        allow_create: Configuration.allow_create
       }
     end
 
     def authorization_params(params)
-      params.permit(
-        :scope,
-        :state,
-        :theme,
-        :prompt,
-        :max_age,
-        :strategy,
-        :branding,
-        :ui_locales
-      )
+      params.permit(*ALLOWED_PARAMS)
     end
   end
 end
