@@ -28,6 +28,7 @@ module Gamora
             branding: ["amco"],
             theme: ["default"],
             ui_locales: ["en"],
+            allow_create: ["true"],
             redirect_uri: ["http://localhost:3000"]
           }
         end
@@ -50,7 +51,8 @@ module Gamora
             max_age: "100000",
             strategy: "custom",
             branding: "avanza",
-            ui_locales: "es-MX"
+            ui_locales: "es-MX",
+            allow_create: "false"
           }
         end
 
@@ -63,7 +65,8 @@ module Gamora
             max_age: [params[:max_age]],
             strategy: [params[:strategy]],
             branding: [params[:branding]],
-            ui_locales: [params[:ui_locales]]
+            ui_locales: [params[:ui_locales]],
+            allow_create: [params[:allow_create]]
           }
         end
 

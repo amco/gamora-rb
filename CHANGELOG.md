@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.0] - 2024-07-22
+
+- Enhancements:
+  - Add support for `allow_create` param in the authorization url.
+
 ## [0.11.0] - 2024-02-21
 
 - Deprecations:

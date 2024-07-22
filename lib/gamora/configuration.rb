@@ -17,6 +17,7 @@ module Gamora
     mattr_accessor :default_branding, default: "amco"
     mattr_accessor :default_theme, default: "default"
     mattr_accessor :ui_locales, default: -> { I18n.locale }
+    mattr_accessor :allow_create, default: true
     mattr_accessor :userinfo_cache_expires_in, default: 1.minute
     mattr_accessor :introspect_cache_expires_in, default: 0.seconds
 
