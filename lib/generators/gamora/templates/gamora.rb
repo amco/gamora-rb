@@ -22,5 +22,5 @@ Gamora.setup do |config|
   # config.allow_create = true
   # config.userinfo_cache_expires_in = 1.minute
   # config.introspect_cache_expires_in = 0.seconds
-  # config.authorization_method = -> (user) { user.present? }
+  # config.authorization_method = -> (user) { user.authorized? }
 end
