@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.0] - 2024-10-09
+
+- Features:
+  - Add authorized endpoint in order to inform if the user is granted to
+    access the IDP client.
+
 ## [0.12.0] - 2024-07-22
 
 - Enhancements:
