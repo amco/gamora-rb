@@ -132,6 +132,23 @@ Gamora.setup do |config|
 end
 ```
 
+## Authorization
+
+In order to inform if a user's access token is granted to access the IDP
+client, it is possible to configure the authorization method in the initializer
+that will be used in the `/auth/amco/authorized` endpoint.
+
+```ruby
+Gamora.setup do |config|
+  ...
+
+  config.authorization_method = -> (user) { MyAuthorizationService.call(user) }
+end
+```
+
+Then implement the `MyAuthorizationService` based on your needs and return
+true if the user is granted, otherwise return false.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then,
