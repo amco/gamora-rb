@@ -12,6 +12,7 @@ module Gamora
         family_name: :last_name,
         phone_number: :phone_number,
         email_verified: :email_verified,
+        associated_user_id: :associated_user_id,
         phone_number_verified: :phone_number_verified
       }.freeze
 

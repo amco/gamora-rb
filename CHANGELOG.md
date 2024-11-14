@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.14.0] - 2024-11-14
+
+- Enhancements:
+  - Add support for `associated_user_id` claim.
+
 ## [0.13.0] - 2024-10-09
 
 - Features:
