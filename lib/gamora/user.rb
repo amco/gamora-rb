@@ -12,6 +12,7 @@ module Gamora
                   :first_name,
                   :phone_number,
                   :email_verified,
+                  :associated_user_id,
                   :phone_number_verified
   end
 end

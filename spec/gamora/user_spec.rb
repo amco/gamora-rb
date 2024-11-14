@@ -14,6 +14,7 @@ RSpec.describe Gamora::User do
         phone_number: "+523344556677",
         email_verified: true,
         phone_number_verified: false,
+        associated_user_id: 136,
         roles: { denali: ["publisher"] }
       }
     end

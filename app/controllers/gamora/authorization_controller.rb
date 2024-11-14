@@ -7,9 +7,11 @@ module Gamora
     before_action :authenticate_user!
 
     def show
-      Configuration.authorization_method.call(current_user) ?
-        render(json: { message: "Authorized user" }, status: :ok) :
-        render(json: { error: "Unauthorized user" }, status: :forbidden)
+      if Configuration.authorization_method.call(current_user)
+        render json: { message: "Authorized user" }, status: :ok
+      else
+        render json: { error: "Unauthorized user" }, status: :forbidden
+      end
     end
   end
 end
