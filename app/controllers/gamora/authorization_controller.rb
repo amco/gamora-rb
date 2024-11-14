@@ -8,9 +8,9 @@ module Gamora
 
     def show
       if Configuration.authorization_method.call(current_user)
-        render(json: { message: "Authorized user" }, status: :ok)
+        render json: { message: "Authorized user" }, status: :ok
       else
-        render(json: { error: "Unauthorized user" }, status: :forbidden)
+        render json: { error: "Unauthorized user" }, status: :forbidden
       end
     end
   end
