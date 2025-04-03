@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.14.1] - 2025-04-03
+
+- Enhancements:
+  - Remove ActiveRecord dependency.
+
 ## [0.14.0] - 2024-11-14
 
 - Enhancements:
