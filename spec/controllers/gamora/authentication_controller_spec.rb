@@ -29,6 +29,7 @@ module Gamora
             theme: ["default"],
             ui_locales: ["en"],
             allow_create: ["true"],
+            allow_amco_badge: ["false"],
             redirect_uri: ["http://localhost:3000"]
           }
         end
@@ -52,7 +53,8 @@ module Gamora
             strategy: "custom",
             branding: "avanza",
             ui_locales: "es-MX",
-            allow_create: "false"
+            allow_create: "false",
+            allow_amco_badge: "true"
           }
         end
 
@@ -66,7 +68,8 @@ module Gamora
             strategy: [params[:strategy]],
             branding: [params[:branding]],
             ui_locales: [params[:ui_locales]],
-            allow_create: [params[:allow_create]]
+            allow_create: [params[:allow_create]],
+            allow_amco_badge: [params[:allow_amco_badge]]
           }
         end
 

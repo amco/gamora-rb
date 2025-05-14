@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gamora (0.14.1)
+    gamora (0.15.0)
       oauth2 (>= 1.4)
       rails (>= 6.0)
 

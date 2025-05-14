@@ -20,6 +20,7 @@ Gamora.setup do |config|
   # config.default_theme = "default"
   # config.ui_locales = -> { I18n.locale }
   # config.allow_create = true
+  # config.allow_amco_badge = false
   # config.userinfo_cache_expires_in = 1.minute
   # config.introspect_cache_expires_in = 0.seconds
   # config.authorization_method = ->(user) { user.authorized? }

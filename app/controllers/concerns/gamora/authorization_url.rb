@@ -12,6 +12,7 @@ module Gamora
       branding
       ui_locales
       allow_create
+      allow_amco_badge
     ].freeze
 
     def authorization_url(params, extra_params = {})
@@ -34,7 +35,8 @@ module Gamora
         strategy: Configuration.default_strategy,
         branding: Configuration.default_branding,
         ui_locales: Configuration.ui_locales.call,
-        allow_create: Configuration.allow_create
+        allow_create: Configuration.allow_create.to_s,
+        allow_amco_badge: Configuration.allow_amco_badge.to_s
       }
     end
 
