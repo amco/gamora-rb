@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.15.0] - 2025-05-14
+
+- Enhancements:
+  - Add support for `allow_amco_badge` param in the authorization url.
+
 ## [0.14.1] - 2025-04-03
 
 - Enhancements:
