@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.15.0] - 2025-07-04
+
+- Enhancements:
+  - Add support for `sp` (Service provider) param in the authorization url.
+
 ## [0.15.0] - 2025-05-14
 
 - Enhancements:

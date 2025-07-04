@@ -3,6 +3,7 @@
 module Gamora
   module AuthorizationUrl
     ALLOWED_PARAMS = %i[
+      sp
       scope
       state
       theme
