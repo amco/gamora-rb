@@ -45,6 +45,7 @@ module Gamora
       context "when custom params are passed" do
         let(:params) do
           {
+            sp: "google",
             state: "state",
             scope: "openid",
             theme: "default",
@@ -60,6 +61,7 @@ module Gamora
 
         let(:expected_params) do
           {
+            sp: [params[:sp]],
             state: [params[:state]],
             scope: [params[:scope]],
             theme: [params[:theme]],
