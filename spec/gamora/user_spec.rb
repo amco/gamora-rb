@@ -11,8 +11,12 @@ RSpec.describe Gamora::User do
         username: "foobar",
         first_name: "Foo",
         last_name: "Bar",
+        birth_day: 10,
+        birth_month: 10,
         phone_number: "+523344556677",
         email_verified: true,
+        national_id: "XXXX123456HTCG04",
+        national_id_country: "MX",
         phone_number_verified: false,
         associated_user_id: 136,
         roles: { denali: ["publisher"] }

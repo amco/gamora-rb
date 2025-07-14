@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.15.0] - 2025-07-04
+## [0.17.0] - 2025-07-14
+
+- Enhancements:
+  - Add support for `birth_day`, `birth_month`, `national_id` and `national_id_country` claims.
+
+## [0.16.0] - 2025-07-04
 
 - Enhancements:
   - Add support for `sp` (Service provider) param in the authorization url.

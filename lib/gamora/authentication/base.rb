@@ -10,8 +10,12 @@ module Gamora
         username: :username,
         given_name: :first_name,
         family_name: :last_name,
+        birth_day: :birth_day,
+        birth_month: :birth_month,
         phone_number: :phone_number,
         email_verified: :email_verified,
+        national_id: :national_id,
+        national_id_country: :national_id_country,
         associated_user_id: :associated_user_id,
         phone_number_verified: :phone_number_verified
       }.freeze
