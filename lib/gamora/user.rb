@@ -10,8 +10,12 @@ module Gamora
                   :username,
                   :last_name,
                   :first_name,
+                  :birth_day,
+                  :birth_month,
                   :phone_number,
                   :email_verified,
+                  :national_id,
+                  :national_id_country,
                   :associated_user_id,
                   :phone_number_verified
   end
