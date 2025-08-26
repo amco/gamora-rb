@@ -9,6 +9,7 @@ AllCops:
   Exclude:
     - "spec/dummy/**/*"
     - "spec/spec_helper.rb"
+    - "vendor/**/*"
 
 Style/StringLiterals:
   Enabled: true
