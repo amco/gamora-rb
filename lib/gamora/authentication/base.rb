@@ -63,7 +63,7 @@ module Gamora
         cache_key = cache_key(:userinfo, access_token)
         expires_in = Configuration.userinfo_cache_expires_in
 
-        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
+        Rails.cache.fetch(cache_key, expires_in: expires_in) do
           oauth_client.userinfo(access_token)
         end
       end
@@ -72,7 +72,7 @@ module Gamora
         cache_key = cache_key(:introspect, access_token)
         expires_in = Configuration.introspect_cache_expires_in
 
-        Rails.cache.fetch(cache_key, { expires_in: expires_in }) do
+        Rails.cache.fetch(cache_key, expires_in: expires_in) do
           oauth_client.introspect(access_token)
         end
       end

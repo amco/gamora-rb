@@ -1,8 +1,11 @@
-require: rubocop-rspec
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
   Exclude:
     - "spec/dummy/**/*"
     - "spec/spec_helper.rb"
