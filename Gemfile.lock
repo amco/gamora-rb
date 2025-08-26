@@ -265,6 +265,10 @@ GEM
     rubocop-rspec (3.6.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
+    rubocop-rspec_rails (2.31.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
+      rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     snaky_hash (2.0.3)
@@ -316,6 +320,7 @@ DEPENDENCIES
   rubocop (~> 1.80)
   rubocop-rake
   rubocop-rspec
+  rubocop-rspec_rails
   sqlite3 (~> 2.7)
   webmock (~> 3.25)
 

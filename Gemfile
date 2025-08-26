@@ -10,5 +10,6 @@ gem "rspec-rails", "~> 8.0"
 gem "rubocop", "~> 1.80"
 gem "rubocop-rake", require: false
 gem "rubocop-rspec", require: false
+gem "rubocop-rspec_rails", require: false
 gem "sqlite3", "~> 2.7"
 gem "webmock", "~> 3.25"
